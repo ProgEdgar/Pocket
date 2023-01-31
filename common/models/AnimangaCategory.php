@@ -1,26 +1,26 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "favorite".
+ * This is the model class for table "animanga_category".
  *
- * @property int $User_Id
+ * @property int $Category_Id
  * @property int $AniManga_Id
  *
  * @property Animanga $aniManga
- * @property User $user
+ * @property Category $category
  */
-class Favorite extends \yii\db\ActiveRecord
+class AnimangaCategory extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'favorite';
+        return 'animanga_category';
     }
 
     /**
@@ -29,11 +29,11 @@ class Favorite extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['User_Id', 'AniManga_Id'], 'required'],
-            [['User_Id', 'AniManga_Id'], 'integer'],
-            [['User_Id', 'AniManga_Id'], 'unique', 'targetAttribute' => ['User_Id', 'AniManga_Id']],
+            [['Category_Id', 'AniManga_Id'], 'required'],
+            [['Category_Id', 'AniManga_Id'], 'integer'],
+            [['Category_Id', 'AniManga_Id'], 'unique', 'targetAttribute' => ['Category_Id', 'AniManga_Id']],
             [['AniManga_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Animanga::class, 'targetAttribute' => ['AniManga_Id' => 'IdAniManga']],
-            [['User_Id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['User_Id' => 'IdUser']],
+            [['Category_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['Category_Id' => 'IdCategory']],
         ];
     }
 
@@ -43,7 +43,7 @@ class Favorite extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'User_Id' => 'User ID',
+            'Category_Id' => 'Category ID',
             'AniManga_Id' => 'Ani Manga ID',
         ];
     }
@@ -59,12 +59,12 @@ class Favorite extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * Gets query for [[Category]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getCategory()
     {
-        return $this->hasOne(User::class, ['IdUser' => 'User_Id']);
+        return $this->hasOne(Category::class, ['IdCategory' => 'Category_Id']);
     }
 }

@@ -4,49 +4,31 @@
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
-    <div class="p-5 mb-4 bg-transparent rounded-3">
-        <div class="container-fluid py-5 text-center">
-            <h1 class="display-4">Congratulations!</h1>
-            <p class="fs-5 fw-light">You have successfully created your Yii-powered application.</p>
-            <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-        </div>
-    </div>
-
-    <div class="body-content">
-
+<div class="bg-color-2 rad-tr-15 rad-b-15">
+    <div class="container-fluid pb-4 px-4">
         <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+            <div class="col">
+                <!-- Page Heading -->
+                <div class="mb-4">
+                    <select class="sel-color-1 mt-4" id="order-by" onchange="changePage('<?=Yii::$app->request->baseUrl.'/'?>','home',1)">
+                        <option class="option-color1" value="latest-updates" <?=('latest-updates'==$Option)?'selected="selected"':''?>>Latest Updates</option>
+                        <option class="option-color1" value="ranking" <?=('ranking'==$Option)?'selected="selected"':''?>>Ranking</option>
+                        <option class="option-color1" value="popular" <?=('popular'==$Option)?'selected="selected"':''?>>Popular</option>
+                    </select>
+                    <select class="float-right sel-color-1 mt-4" id="show-per-page" onchange="changePage('<?=Yii::$app->request->baseUrl.'/'?>','home',<?=$PageNumber?>)">
+                        <option class="option-color1" value="25" <?=(25==$NumberPerPage)?'selected="selected"':''?>>Show mangas: 25 per page</option>
+                        <option class="option-color1" value="50" <?=(50==$NumberPerPage)?'selected="selected"':''?>>Show mangas: 50 per page</option>
+                        <option class="option-color1" value="100" <?=(100==$NumberPerPage)?'selected="selected"':''?>>Show mangas: 100 per page</option>
+                    </select>
+                </div>
+                <!-- Approach -->
+                <div class="bg-color-1 rad-all-15 p-4">
+                    <?=$this->render('//layouts/view_type_1',['Option'=>$Option,'Mangas'=>$Mangas,'PageNumber'=>$PageNumber,'NumOfPages'=>$NumOfPages,'NumberPerPage'=>$NumberPerPage])?>
+                </div>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="col-md-3 mt-4">
+                <?=$this->render('//layouts/genre_list',['Categories'=>$Categories])?>
             </div>
         </div>
-
     </div>
 </div>

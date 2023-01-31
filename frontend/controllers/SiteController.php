@@ -2,19 +2,23 @@
 
 namespace frontend\controllers;
 
+use common\models\LoginForm;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
+use frontend\models\SignupForm;
+use frontend\models\ContactForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+
+use common\models\AniManga;
+use common\models\Category;
+
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
-use frontend\models\ContactForm;
 
 /**
  * Site controller
@@ -29,10 +33,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'only' => ['login', 'logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['login', 'signup'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -73,9 +77,37 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionMangaindex()
     {
-        return $this->render('index');
+        $Mangas = $Mangas = AniManga::find()
+                    ->where(['Type'=>false])
+                    ->leftJoin('chep cp', $on='animanga.IdAniManga = cp.AniManga_Id')
+                    ->groupBy('animanga.IdAniManga')
+                    ->orderBy('max(cp.ReleaseDate) desc, animanga.Title asc')
+                    ->all();
+        $Categories = Category::find()->all();
+        $Option = 'latest-updates';
+        $NumberPerPage = 50;
+        $PageNumber = 1;
+        $NumOfPages = 1;
+        
+        if($Mangas){
+            $floatNum = count($Mangas) / $NumberPerPage;
+            $intNum = round($floatNum);
+            if($intNum<$floatNum){
+                $intNum++;
+            }
+            $NumOfPages = $intNum;
+        }
+
+        return $this->render('index', [
+            'Mangas' => $Mangas,
+            'Categories' => $Categories,
+            'PageNumber' => $PageNumber,
+            'NumberPerPage' => $NumberPerPage,
+            'NumOfPages' => $NumOfPages,
+            'Option' => $Option,
+        ]);
     }
 
     /**

@@ -1,26 +1,26 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "animanga_category".
+ * This is the model class for table "animanga_author".
  *
- * @property int $Category_Id
+ * @property int $Author_Id
  * @property int $AniManga_Id
  *
  * @property Animanga $aniManga
- * @property Category $category
+ * @property Author $author
  */
-class AnimangaCategory extends \yii\db\ActiveRecord
+class AnimangaAuthor extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'animanga_category';
+        return 'animanga_author';
     }
 
     /**
@@ -29,11 +29,11 @@ class AnimangaCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Category_Id', 'AniManga_Id'], 'required'],
-            [['Category_Id', 'AniManga_Id'], 'integer'],
-            [['Category_Id', 'AniManga_Id'], 'unique', 'targetAttribute' => ['Category_Id', 'AniManga_Id']],
+            [['Author_Id', 'AniManga_Id'], 'required'],
+            [['Author_Id', 'AniManga_Id'], 'integer'],
+            [['Author_Id', 'AniManga_Id'], 'unique', 'targetAttribute' => ['Author_Id', 'AniManga_Id']],
             [['AniManga_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Animanga::class, 'targetAttribute' => ['AniManga_Id' => 'IdAniManga']],
-            [['Category_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['Category_Id' => 'IdCategory']],
+            [['Author_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Author::class, 'targetAttribute' => ['Author_Id' => 'IdAuthor']],
         ];
     }
 
@@ -43,7 +43,7 @@ class AnimangaCategory extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Category_Id' => 'Category ID',
+            'Author_Id' => 'Author ID',
             'AniManga_Id' => 'Ani Manga ID',
         ];
     }
@@ -59,12 +59,12 @@ class AnimangaCategory extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Category]].
+     * Gets query for [[Author]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
+    public function getAuthor()
     {
-        return $this->hasOne(Category::class, ['IdCategory' => 'Category_Id']);
+        return $this->hasOne(Author::class, ['IdAuthor' => 'Author_Id']);
     }
 }

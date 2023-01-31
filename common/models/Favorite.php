@@ -1,26 +1,26 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "chep_readsaw".
+ * This is the model class for table "favorite".
  *
  * @property int $User_Id
- * @property int $ChEp_Id
+ * @property int $AniManga_Id
  *
- * @property Chep $chEp
+ * @property Animanga $aniManga
  * @property User $user
  */
-class ChepReadsaw extends \yii\db\ActiveRecord
+class Favorite extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'chep_readsaw';
+        return 'favorite';
     }
 
     /**
@@ -29,10 +29,10 @@ class ChepReadsaw extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['User_Id', 'ChEp_Id'], 'required'],
-            [['User_Id', 'ChEp_Id'], 'integer'],
-            [['User_Id', 'ChEp_Id'], 'unique', 'targetAttribute' => ['User_Id', 'ChEp_Id']],
-            [['ChEp_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Chep::class, 'targetAttribute' => ['ChEp_Id' => 'IdChEp']],
+            [['User_Id', 'AniManga_Id'], 'required'],
+            [['User_Id', 'AniManga_Id'], 'integer'],
+            [['User_Id', 'AniManga_Id'], 'unique', 'targetAttribute' => ['User_Id', 'AniManga_Id']],
+            [['AniManga_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Animanga::class, 'targetAttribute' => ['AniManga_Id' => 'IdAniManga']],
             [['User_Id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['User_Id' => 'IdUser']],
         ];
     }
@@ -44,18 +44,18 @@ class ChepReadsaw extends \yii\db\ActiveRecord
     {
         return [
             'User_Id' => 'User ID',
-            'ChEp_Id' => 'Ch Ep ID',
+            'AniManga_Id' => 'Ani Manga ID',
         ];
     }
 
     /**
-     * Gets query for [[ChEp]].
+     * Gets query for [[AniManga]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getChEp()
+    public function getAniManga()
     {
-        return $this->hasOne(Chep::class, ['IdChEp' => 'ChEp_Id']);
+        return $this->hasOne(Animanga::class, ['IdAniManga' => 'AniManga_Id']);
     }
 
     /**

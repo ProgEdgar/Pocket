@@ -1,0 +1,46 @@
+.bold {
+    font-weight: bold !important;
+}
+
+.italic {
+    font-style: italic !important;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.text-30 {
+    font-size: 30px !important;
+}
+
+.rad-all-50p {
+    border-radius: 50% !important;
+}
+
+.rad-b-0 {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.rad-t-15 {
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+}
+
+.rad-all-15 {
+    border-radius: 15px !important;
+}
+
+.rad-tr-15 {
+    border-top-right-radius: 15px !important;
+}
+
+.rad-b-15 {
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+}
+
+.mar-b-100 {
+    margin-top: 100px !important;
+}

@@ -42,7 +42,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'home' => 'site/index',
+                '/' => 'site/mangaindex',
+                'home' => 'site/mangaindex',
+                'latest-updated' => 'site/mangaindex',
                 'about' => 'site/about',
 
 
