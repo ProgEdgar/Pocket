@@ -22,19 +22,20 @@ class m000000_000004_create_animanga_table extends Migration
             'Title' => $this->string(100)->notNull(),
             'AlternativeTitle' => $this->string(100),
             'OriginalTitle' => $this->string(100),
-            'Status' => $this->boolean()->notNull()->defaultValue(false),
-            'OneShotMovie' => $this->boolean()->notNull()->defaultValue(false),
-            'R18' => $this->boolean()->notNull()->defaultValue(false),
+            'Status' => $this->string(20)->notNull(),
+            'Type' => $this->string(20)->notNull(),
             'Server' => $this->string(10)->notNull()->defaultValue('en_US'),
             'SrcImage' => $this->string(50),
-            'Type' => $this->boolean()->notNull()->defaultValue(false),
+            'Rating' => $this->float(8,2),
             'ReleaseDate' => $this->date()->notNull(),
-            'Updated' => "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL",
             'Description' => $this->text()->notNull(),
-            'Manager_Id' => $this->integer()->notNull(),
+            'ApiAniMangaId' => $this->integer(),
+            'Api_Id' => $this->integer(),
+            'Manager_Id' => $this->integer(),
         ], $tableOptions);
 
         $this->addForeignKey('fk_animanga_manager', 'animanga', 'Manager_Id', 'manager', 'IdManager');
+        $this->addForeignKey('fk_animanga_api', 'animanga', 'Api_Id', 'api', 'IdApi');
     }
 
     /**

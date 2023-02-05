@@ -19,7 +19,6 @@ class m000000_000006_create_episode_table extends Migration
 
         $this->createTable('{{%episode}}', [
             'IdEpisode' => $this->primaryKey(),
-            'Ova' => $this->boolean()->notNull()->defaultValue(false),
             'SrcVideo' => $this->string(50)->notNull(),
             'ChEp_Id' => $this->integer()->notNull(),
         ], $tableOptions);

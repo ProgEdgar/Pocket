@@ -20,9 +20,9 @@ class m000000_000005_create_chep_table extends Migration
         $this->createTable('{{%chep}}', [
             'IdChEp' => $this->primaryKey(),
             'Number' => $this->float(7,4)->notNull(),
-            'Name' => $this->string(100),
+            'Title' => $this->string(100),
+            'Type' => $this->string(20)->notNull(),
             'ReleaseDate' => "DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL",
-            'Updated' => "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL",
             'Season' => $this->integer(),
             'AniManga_Id' => $this->integer()->notNull(),
             'Manager_Id' => $this->integer()->notNull(),

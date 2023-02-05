@@ -100,7 +100,7 @@ class SiteController extends Controller
             $NumOfPages = $intNum;
         }
 
-        return $this->render('index', [
+        return $this->render('manga_index', [
             'Mangas' => $Mangas,
             'Categories' => $Categories,
             'PageNumber' => $PageNumber,

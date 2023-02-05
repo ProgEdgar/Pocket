@@ -20,7 +20,6 @@ class m000000_000006_create_chapter_table extends Migration
         $this->createTable('{{%chapter}}', [
             'IdChapter' => $this->primaryKey(),
             'PagesNumber' => $this->integer()->notNull(),
-            'OneShot' => $this->boolean()->notNull()->defaultValue(false),
             'SrcFolder' => $this->string(50)->notNull(),
             'ChEp_Id' => $this->integer()->notNull(),
         ], $tableOptions);

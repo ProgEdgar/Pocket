@@ -30,6 +30,7 @@ class m000000_000002_create_user_table extends Migration
             'ChapterShow' => $this->boolean()->notNull()->defaultValue(true),
             'Server' => $this->string(10)->notNull()->defaultValue('en_US'),
             'PrimaryList_Id' => $this->integer()->notNull()->defaultValue(1),
+            'Api_Id' => $this->integer(),
 
             'LastVisit' => "DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL",
             'Created' => "DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL",
@@ -42,6 +43,7 @@ class m000000_000002_create_user_table extends Migration
         ], $tableOptions);
 
         $this->addForeignKey('fk_user_library_list', 'user', 'PrimaryList_Id', 'library_list', 'IdLibraryList');
+        $this->addForeignKey('fk_user_api', 'user', 'Api_Id', 'api', 'IdApi');
     }
 
     /**

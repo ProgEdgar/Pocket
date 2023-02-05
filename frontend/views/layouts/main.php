@@ -69,7 +69,7 @@ AppAsset::register($this);
                             <a class="nav-link text-color-2 <?=(Yii::$app->controller->route == 'site/login')?'active':''?>" href="<?=Yii::$app->request->baseUrl.'/login'?>">Login</a>
                         </li>
                         <?php }else{ ?>
-                        <li class="nav-item align-center">
+                        <li class="nav-item align-c">
                             <a class="nav-link text-color-2 <?=(Yii::$app->controller->route == 'leitor/myaccount')?'active':''?>" href="<?=Yii::$app->request->baseUrl.'/my_account'?>">
                                 <div class="row">
                                     <div class="col-6">
@@ -91,27 +91,27 @@ AppAsset::register($this);
                     </ul>
                 </div>
             </nav>
-            <div class="container mar-b-100">
+            <div class="container m-b-100p">
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item pb-0 px-0">
-                        <a class="nav-link rad-t-15 rad-b-0 <?=(Yii::$app->controller->route=='site/mangaindex'||Yii::$app->controller->route=='manga/mangaindex')?'active bg-color-2 text-color-1':'text-color-2'?>" 
-                            href="<?=Yii::$app->request->baseUrl.'/last-updated'?>">Last Updated</a>
+                        <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='site/mangaindex'||Yii::$app->controller->route=='manga/mangaindex')?'active bg-color-2 text-color-1':'text-color-2'?>" 
+                            href="<?=Yii::$app->request->baseUrl.'/latest-updated'?>">Latest Updated</a>
                     </li>
                     <li class="nav-item pb-0 px-0">
-                        <a class="nav-link rad-t-15 rad-b-0 <?=(Yii::$app->controller->route=='manga/allmanga')?'active bg-color-2 text-color-1':'text-color-2'?>" 
+                        <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='manga/allmanga')?'active bg-color-2 text-color-1':'text-color-2'?>" 
                             href="<?=Yii::$app->request->baseUrl.'/all-manga'?>">All Manga</a>
                     </li>
                     <li class="nav-item pb-0 px-0">
-                        <a class="nav-link rad-t-15 rad-b-0 <?=(Yii::$app->controller->route=='api/allmanga')?'active bg-color-2 text-color-1':'text-color-2'?>" 
+                        <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='api/allmanga')?'active bg-color-2 text-color-1':'text-color-2'?>" 
                             href="<?=Yii::$app->request->baseUrl.'/other-mangas'?>">Other Manga</a>
                     </li>
                     <?php if (Yii::$app->user->isGuest) { ?>
                     <li class="nav-item pb-0 px-0">
-                        <a class="nav-link rad-t-15 rad-b-0 disabled" href="#">Library</a>
+                        <a class="nav-link rad-t-15 rad-b-0 bold disabled" href="#">Library</a>
                     </li>
                     <?php } else { ?>
                     <li class="nav-item pb-0 px-0">
-                        <a class="nav-link rad-t-15 rad-b-0 <?=(Yii::$app->controller->route=='library/index'||Yii::$app->controller->route=='library/index2')?'active bg-color-2 text-color-1':'text-color-2'?>" 
+                        <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='library/index'||Yii::$app->controller->route=='library/index2')?'active bg-color-2 text-color-1':'text-color-2'?>" 
                             href="<?=Yii::$app->request->baseUrl.'/'.'library'?>">Library</a>
                     </li>
                     <?php } ?>
@@ -126,7 +126,7 @@ AppAsset::register($this);
 
         <footer id="footer" class="py-2">
             <div class="container">
-                <p class="text-right text-color-1 bold m-0">Projet Developed By: <span class="text-color-3">Edgar Cordeiro</span></p>
+                <p class="text-r text-color-1 bold m-0">Projet Developed By: <span class="text-color-3">Edgar Cordeiro</span></p>
             </div>
         </footer>
 

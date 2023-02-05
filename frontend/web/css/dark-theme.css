@@ -18,6 +18,14 @@
     background-color: #D26A09 !important;
 }
 
+.bg-color-6{
+    background-color: #D22109 !important;
+}
+
+.bg-color-7{
+    background-color: #005ce6 !important;
+}
+
 .text-color-1 {
     color: #333333 !important;
 }
@@ -42,6 +50,10 @@
     color: #D26A09 !important;
 }
 
+.text-color-7 {
+    color: #FFFFFF !important;
+}
+
 .sel-color-1{
     background: #11CDD9;
     border:0px;
@@ -54,4 +66,67 @@
 
 .pol-color-1 {
     fill: #000000;
+}
+
+.bord-b-1-sol-color-1{
+    border-bottom: 1px solid #E35201 !important;
+}
+
+.bord-b-1-sol-color-2{
+    border-bottom: 1px solid #11CDD9 !important;
+} 
+
+.bord-y-1-sol-color-2{
+    border-bottom: 1px solid #11CDD9 !important;
+    border-top: 1px solid #11CDD9 !important;
+} 
+.bord-all-1-sol-color-2{
+    /*border-top: 1px solid #11CDD9 !important;
+    border-bottom: 1px solid #11CDD9 !important;
+    border-left: 1px solid #11CDD9 !important;
+    border-right: 1px solid #11CDD9 !important;/**/
+    border: 1px solid #11CDD9 !important;
+} 
+
+.bord-b-2-sol-color-3{
+    border-bottom: 2px solid #000000 !important;
+} 
+
+.bord-t-2-sol-color-3{
+    border-top: 2px solid #000000 !important;
+} 
+
+.bord-b-2-sol-color-4{
+    border-bottom: 2px solid #333333 !important;
+} 
+
+.bord-t-0{
+    border-top: none !important;
+}
+
+.bord-color-1{
+    border-color: #000000 !important;
+} 
+
+.scroll-type-1 {
+    scrollbar-color: #11CDD9 #333333 !important;
+}
+
+.tr-list-1:hover {
+    background-color:#000000;
+}
+
+.tr-list-2:hover {
+    background-color:#333333;
+    border-left: 2px solid #000000 !important;
+    border-right: 2px solid #000000 !important;
+}
+
+.tr-list-3:hover {
+    background-color:#333333;
+}
+
+.btn-on-img:hover {
+    background-color: #11CDD9 !important;
+    color: #000000 !important;
 }

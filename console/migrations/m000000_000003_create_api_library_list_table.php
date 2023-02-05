@@ -17,7 +17,7 @@ class m000000_000003_create_api_library_list_table extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
 
-        $this->createTable('{{%api_library_list}}', [
+        /*$this->createTable('{{%api_library_list}}', [
             'IdApiLibraryList' => $this->primaryKey(),
             'List' => "ENUM('1','2','3') NOT NULL",
             'AniMangaCode' => $this->integer()->notNull(),
@@ -27,7 +27,7 @@ class m000000_000003_create_api_library_list_table extends Migration
         ], $tableOptions);
 
         $this->addForeignKey('fk_api_library_list_api', 'api_library_list', 'Api_Id', 'api', 'IdApi');
-        $this->addForeignKey('fk_api_library_list_user', 'api_library_list', 'User_Id', 'user', 'IdUser');
+        $this->addForeignKey('fk_api_library_list_user', 'api_library_list', 'User_Id', 'user', 'IdUser');*/
     }
 
     /**
@@ -35,6 +35,6 @@ class m000000_000003_create_api_library_list_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%api_library_list}}');
+        //$this->dropTable('{{%api_library_list}}');
     }
 }

@@ -37,6 +37,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'urlManagerBackend' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => 'http://localhost/PocketManga/backend/web',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
@@ -45,6 +51,8 @@ return [
                 '/' => 'site/mangaindex',
                 'home' => 'site/mangaindex',
                 'latest-updated' => 'site/mangaindex',
+                'other-mangas' => 'manga/apimanga',
+
                 'about' => 'site/about',
 
 
