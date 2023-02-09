@@ -91,7 +91,7 @@ AppAsset::register($this);
                     </ul>
                 </div>
             </nav>
-            <div class="container m-b-100p">
+            <div class="container m-t-100p">
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item pb-0 px-0">
                         <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='site/mangaindex'||Yii::$app->controller->route=='manga/mangaindex')?'active bg-color-2 text-color-1':'text-color-2'?>" 

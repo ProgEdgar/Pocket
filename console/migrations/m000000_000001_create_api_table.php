@@ -22,6 +22,7 @@ class m000000_000001_create_api_table extends Migration
             'Name' => $this->string(100)->notNull(),
             'Link' => $this->string(200)->notNull(),
             'IsAnime' => $this->boolean()->notNull(),
+            'Data' => $this->string(100),
             'GenresAll' => $this->string(200),
             'GenresId' => $this->string(100),
             'GenresName' => $this->string(100),

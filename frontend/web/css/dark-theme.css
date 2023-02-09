@@ -80,12 +80,13 @@
     border-bottom: 1px solid #11CDD9 !important;
     border-top: 1px solid #11CDD9 !important;
 } 
+
 .bord-all-1-sol-color-2{
-    /*border-top: 1px solid #11CDD9 !important;
-    border-bottom: 1px solid #11CDD9 !important;
-    border-left: 1px solid #11CDD9 !important;
-    border-right: 1px solid #11CDD9 !important;/**/
     border: 1px solid #11CDD9 !important;
+} 
+
+.bord-all-5-sol-color-2{
+    border: 5px solid #11CDD9 !important;
 } 
 
 .bord-b-2-sol-color-3{

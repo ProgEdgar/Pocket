@@ -50,6 +50,10 @@ class MangaController extends Controller
         $Api = null;
         $SortOptions = null;
         $StatusOptions = null;
+        $PageNumber = 1;
+        $NumOfPages = 10;
+
+
         if(!Yii::$app->user->isGuest){
             if(Yii::$app->user->identity->Api_Id){
                 $Api = Api::find()->where(['IdApi'=>Yii::$app->user->identity->Api_Id])->one();
@@ -66,25 +70,31 @@ class MangaController extends Controller
         if($Api){
             $SortOptions = $this->getSortOptions($Api);
             $StatusOptions = $this->getStatusOptions($Api);
-        }
 
-        $JavaApi = '{';
-        $num = 0;
-        foreach($Api as $key=>$value){
-            if($num!=0){
-                $JavaApi .= ',';
+            $JavaApi = '{';
+            $num = 0;
+            foreach($Api as $key=>$value){
+                if($num!=0){
+                    $JavaApi .= ',';
+                }
+                $JavaApi .= '"'.$key.'":'.(isset($value)?'"'.$value.'"':'null');
+                $num++;
             }
-            $JavaApi .= '"'.$key.'":'.(isset($value)?'"'.$value.'"':'null');
-            $num++;
+            $JavaApi .= '}';
         }
-        $JavaApi .= '}';
 
         return $this->render('other_manga', [
             'Api' => $Api,
             'JavaApi' => $JavaApi,
             'SortOptions' => $SortOptions,
             'StatusOptions' => $StatusOptions,
+            'PageNumber' => $PageNumber,
+            'NumOfPages' => $NumOfPages,
         ]);
+    }
+
+    private function initializateApiManga(){
+        
     }
 
     private function getSortOptions(Api $Api){

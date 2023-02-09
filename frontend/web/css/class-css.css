@@ -10,16 +10,37 @@
     font-style: italic !important;
 }
 
+.text-l{
+    text-align: left !important;
+}
+
 .text-r{
-    text-align: right;
+    text-align: right !important;
 }
 
 .text-c{
-    text-align: center;
+    text-align: center !important;
+}
+
+.ts-18{
+    font-size: 18px !important;
 }
 
 .ts-25{
-    font-size: 25px;
+    font-size: 25px !important;
+}
+
+.ellipse{
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
+.text-dec-none{
+    text-decoration: none !important;
 }
 
 .rad-all-50p {
@@ -61,26 +82,30 @@
     border-bottom-right-radius: 15px !important;
 }
 
-.m-b-100p {
+.rad-all-10 {
+    border-radius: 10px !important;
+}
+
+.m-t-100p {
     margin-top: 100px !important;
 }
 
 .float-r{
-    float: right;
+    float: right !important;
 }
 
 .w-150p{
-    width: 150px; 
+    width: 150px !important; 
 }
 
 .remove-bullet{
-    list-style-type: none;
+    list-style-type: none !important;
 }
 
 .br-word{
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: nowrap !important; 
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 .no-hover{
@@ -88,10 +113,15 @@
 }
 
 .pad-y-7{
-    padding-top: 7px;
-    padding-bottom: 7px;
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
 }
 
 .align-c{
-    text-align-last:center;
+    text-align-last:center !important;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
 }
