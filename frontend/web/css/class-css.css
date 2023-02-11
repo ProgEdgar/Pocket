@@ -121,7 +121,11 @@
     text-align-last:center !important;
 }
 
-.disabled {
+/*.disabled {
     pointer-events: none;
     cursor: default;
+}/*/
+
+.b-35{
+    bottom: 35px !important;
 }

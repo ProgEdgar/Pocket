@@ -6,8 +6,8 @@ use yii\helpers\Url;
 $this->title = 'PocketManga';
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<div class="bg-color-2 rad-all-15">
-    <div class="container-fluid pb-4 px-4">
+<div class="bg-color-2 rad-all-15 ">
+    <div class="container-fluid pb-4 px-4 b-35">
         <div class="row">
             <div class="col">
                 <!-- Page Heading -->
@@ -40,7 +40,7 @@ $this->title = 'PocketManga';
                                     <div class="col-12">
                                         <div class="row">
                                             <?php if($SortOptions) { ?>
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <select class="sel-color-1 rad-all-15 w-100 p-2 ml-n2" id="filter_order" 
                                                         onchange="ChangeButtonSearch()">
                                                         <?php $selected=true; foreach($SortOptions as $Sort){?>
@@ -49,19 +49,28 @@ $this->title = 'PocketManga';
                                                     </select>
                                                 </div>
                                             <?php } if($StatusOptions) { ?>
-                                                <div class="col-4">
+                                                <div class="col-3">
                                                     <select class="sel-color-1 rad-all-15 w-100 p-2" id="filter_status"
                                                         onchange="ChangeButtonSearch()">
-                                                        <option value="all" selected="selected">Show All</option>
+                                                        <option value="all" selected="selected">Show All Status</option>
                                                         <?php foreach($StatusOptions as $Status){?>
                                                             <option value="<?=$Status[0]?>"><?=$Status[2]?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
+                                            <?php } if($TypeOptions) { ?>
+                                                <div class="col-3">
+                                                    <select class="sel-color-1 rad-all-15 w-100 p-2" id="filter_type"
+                                                        onchange="ChangeButtonSearch()">
+                                                        <option value="all" selected="selected">Show All Types</option>
+                                                        <?php foreach($TypeOptions as $Type){?>
+                                                            <option value="<?=$Type[0]?>"><?=$Type[1]?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
                                             <?php } ?>
-                                            <div class="col-4">
-                                                <button class="text-color-2 bg-color-1 border-0 rad-all-15 w-100 py-2 ml-2" id="button-search"
-                                                    onclick="ReloadMangas()">Search</button>
+                                            <div class="col-3">
+                                                <button class="text-color-2 bg-color-1 border-0 rad-all-15 w-100 py-2 ml-2" id="button-search" value="1" onclick="SearchMangas()">Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -82,21 +91,13 @@ $this->title = 'PocketManga';
                                         <div class="col-6"><span class="text-color-3 text-l ts-18 bold"> Author: <span class="text-color-2 ts-18 no-bold" id="manga-author"></span></span></div>
                                         <div class="col-6"><span class="text-color-3 text-l ts-18 bold"> Chapters: <span class="text-color-2 ts-18 no-bold" id="manga-chapters"></span></span></div>
                                         <div class="col-6"><span class="text-color-3 text-l ts-18 bold"> Genres: <span class="text-color-2 ts-18 no-bold" id="manga-genres"></span></span></div>
+                                        <div class="col-6"><span class="text-color-3 text-l ts-18 bold"> Type: <span class="text-color-2 ts-18 no-bold" id="manga-type"></span></span></div>
                                         <div class="col-12"><span class="text-color-3 text-l ts-18 bold"> Description: <span class="text-color-2 ts-18 no-bold ellipse" id="manga-description"></span></span></div>
                                     </div>
                                 </div>
                             </a>
                         </div>
                     </div>
-                        <div class="col-12">
-                            <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item"><a class="page-link background-color1 text-color6 border-0" id="page-button-previous">Previous</a></li>
-                                <li class="page-item"><a class="page-link background-color2 text-color1 border-0" id="page-button-one"></a></li>
-                                <li class="page-item"><a class="page-link background-color1 text-color2 border-0" id="page-button-two"></a></li>
-                                <li class="page-item"><a class="page-link background-color1 text-color2 border-0" id="page-button-three"></a></li>
-                                <li class="page-item"><a class="page-link background-color1 text-color6 border-0" id="page-button-next">Next</a></li>
-                            </ul>
-                        </div>
                     <div class="row" id="no-manga">
                         <div class="col">
                             <p class="text-color-2" id="p-no-manga"> There are no manga </p>
@@ -111,11 +112,11 @@ $this->title = 'PocketManga';
 <script>
     var baseUrl = '<?=Yii::$app->request->baseUrl?>';
     var Api = <?=$JavaApi?>;
-    var PageNumber = <?=$PageNumber?>;
-    var NumOfPages = <?=$NumOfPages?>;
-    var Link = null;
+    var PageNumber = 1;
+    var NumPerPage = 25;
     var GenreClone = $('.div-genre-clone').clone();
     var MangaClone = $('.div-manga-clone').clone();
+    var ScrollMax = document.documentElement.scrollHeight-500;
     document.getElementById("filters").style.display = "none";
     var btnClass = document.getElementById('button-filter');
     var btnClassName = btnClass.className;
@@ -123,9 +124,22 @@ $this->title = 'PocketManga';
     
     AddAllGenres();
     ChangeButtonSearch();
-    ReloadMangas();
-    AddLinksToPageNummber()
+    AddMangas();
     
+    window.onscroll = function() {
+        var ScrollPx = $(window).scrollTop() + $(window).height();;
+        if (ScrollPx >= ScrollMax) {
+            ScrollMax = document.documentElement.scrollHeight+10000;
+            PageNumber++;
+            AddMangas();
+        }
+    };
+    
+    function SearchMangas(){
+        AddMangas();
+        PressFilterButton();
+    }
+
     function AddAllGenres(){
         $('#filters_genres').html('');
         var link = Api['GenresAll'];
@@ -172,17 +186,22 @@ $this->title = 'PocketManga';
                 ResponseTotal= GetResponsePath(response,total);
                 if(ResponseTotal){
                     $('#button-search').text('Search ('+ResponseTotal+')');
+                    $('#button-search').attr('value', Math.ceil(ResponseTotal/NumPerPage));
                 }else{
                     $('#button-search').text('Search (0)');
+                    $('#button-search').attr('value', 1);
                 }
             }else{
                 $('#button-search').text('Search (?????)');
+                $('#button-search').attr('value', 1);
             }
         });
     }/**/
 
-    function ReloadMangas(){
-        $('.manga-list').html('');
+    function AddMangas(){
+        if(PageNumber == 1){
+            $('.manga-list').html('');
+        }
         var link = Api['AMSearchLink']+GetFilters();
         var Data = StringToArray(Api['Data']);
         var MangaId = StringToArray(Api['AMId']);
@@ -193,6 +212,7 @@ $this->title = 'PocketManga';
         var MangaChapters = StringToArray(Api['AMCEQuantity']);
         var MangaGenres = StringToArray(Api['AMGenre']);
         var MangaGenresName = StringToArray(Api['AMGenreName']);
+        var MangaType = StringToArray(Api['AMType']);
         var MangaDescription = StringToArray(Api['AMDescription']);
         var MangaImage = StringToArray(Api['AMImage']);
         var ResponseData = null;
@@ -204,67 +224,72 @@ $this->title = 'PocketManga';
         var ResponseChapters = null;
         var ResponseGenres = null;
         var ResponseGenresName = null;
+        var ResponseType = null;
         var ResponseDescription = null;
         var ResponseImage = null;
 
         if(Api['SearchPage']!==''){
             link = link+'&'+Api['SearchPage']+'='+PageNumber;
         }
+        if(PageNumber <= document.getElementById('button-search').value){
+            $.ajax({
+                method:"GET",
+                url:link
+            })
+            .done(function(response){
+                ResponseData = GetResponsePath(response,Data);
+                if(ResponseData){
+                    document.getElementById("no-manga").style.display = "none";
+                    for(var i=0; i<ResponseData.length; i++){
+                        var Authors = null;
+                        var Genres = null;
 
-        $.ajax({
-            method:"GET",
-            url:link
-        })
-        .done(function(response){
-            ResponseData = GetResponsePath(response,Data);
-            if(ResponseData){
-                document.getElementById("no-manga").style.display = "none";
-                for(var i=0; i<ResponseData.length; i++){
-                    var Authors = null;
-                    var Genres = null;
+                        ResponseId = GetResponsePath(ResponseData[i],MangaId);
+                        ResponseTitle = GetResponsePath(ResponseData[i],MangaTitle);
+                        ResponseAltTitle = GetResponsePath(ResponseData[i],MangaAltTitle);
+                        ResponseAuthor = GetResponsePath(ResponseData[i],MangaAuthor);
+                        ResponseChapters = GetResponsePath(ResponseData[i],MangaChapters);
+                        ResponseGenres = GetResponsePath(ResponseData[i],MangaGenres);
+                        ResponseType = GetResponsePath(ResponseData[i],MangaType);
+                        ResponseDescription = GetResponsePath(ResponseData[i],MangaDescription);
+                        ResponseImage = GetResponsePath(ResponseData[i],MangaImage);
 
-                    ResponseId = GetResponsePath(ResponseData[i],MangaId);
-                    ResponseTitle = GetResponsePath(ResponseData[i],MangaTitle);
-                    ResponseAltTitle = GetResponsePath(ResponseData[i],MangaAltTitle);
-                    ResponseAuthor = GetResponsePath(ResponseData[i],MangaAuthor);
-                    ResponseChapters = GetResponsePath(ResponseData[i],MangaChapters);
-                    ResponseGenres = GetResponsePath(ResponseData[i],MangaGenres);
-                    ResponseDescription = GetResponsePath(ResponseData[i],MangaDescription);
-                    ResponseImage = GetResponsePath(ResponseData[i],MangaImage);
-
-                    for(var i; i<ResponseAuthor.length;i++){
-                        ResponseAuthorName = GetResponsePath(ResponseAuthor[i],MangaAuthorName);
-                        if(i==0){
-                            Authors = ResponseAuthorName;
-                        }else{
-                            Authors = Authors+', '+ResponseAuthorName;
+                        for(var i; i<ResponseAuthor.length;i++){
+                            ResponseAuthorName = GetResponsePath(ResponseAuthor[i],MangaAuthorName);
+                            if(i==0){
+                                Authors = ResponseAuthorName;
+                            }else{
+                                Authors = Authors+', '+ResponseAuthorName;
+                            }
                         }
-                    }
 
-                    for(var i; i<ResponseAuthor.length;i++){
-                        ResponseGenresName = GetResponsePath(ResponseGenres[i],MangaGenresName);
-                        if(i==0){
-                            Genres = ResponseGenresName;
-                        }else{
-                            Genres = Genres+', '+ResponseGenresName;
+                        for(var i; i<ResponseAuthor.length;i++){
+                            ResponseGenresName = GetResponsePath(ResponseGenres[i],MangaGenresName);
+                            if(i==0){
+                                Genres = ResponseGenresName;
+                            }else{
+                                Genres = Genres+', '+ResponseGenresName;
+                            }
                         }
+                        
+                        var manga_clone = MangaClone.clone();
+                        $('#manga-link', manga_clone).attr('href',baseUrl+'/api/'+Api['Name']+'/manga-'+ResponseId);
+                        $('#manga-image', manga_clone).attr('src',ResponseImage);
+                        $('#manga-title', manga_clone).text((ResponseTitle?ResponseTitle:''));
+                        $('#manga-alt-title', manga_clone).text((ResponseAltTitle?ResponseAltTitle:''));
+                        $('#manga-author', manga_clone).text((Authors?Authors:''));
+                        $('#manga-chapters', manga_clone).text((ResponseChapters?ResponseChapters+' in total':''));
+                        $('#manga-genres', manga_clone).text((Genres?Genres:''));
+                        $('#manga-type', manga_clone).text((ResponseType?ResponseType:''));
+                        $('#manga-description', manga_clone).text((ResponseDescription?ResponseDescription:''));
+                        $('.manga-list').append(manga_clone);
+                        ScrollMax = document.documentElement.scrollHeight-500;
                     }
-                    
-                    var manga_clone = MangaClone.clone();
-                    $('#manga-link', manga_clone).attr('href',baseUrl+'/api/'+Api['Name']+'/manga-'+ResponseId);
-                    $('#manga-image', manga_clone).attr('src',ResponseImage);
-                    $('#manga-title', manga_clone).text((ResponseTitle?ResponseTitle:''));
-                    $('#manga-alt-title', manga_clone).text((ResponseAltTitle?ResponseAltTitle:''));
-                    $('#manga-author', manga_clone).text((Authors?Authors:''));
-                    $('#manga-chapters', manga_clone).text((ResponseChapters?ResponseChapters+' in total':''));
-                    $('#manga-genres', manga_clone).text((Genres?Genres:''));
-                    $('#manga-description', manga_clone).text((ResponseDescription?ResponseDescription:''));
-                    $('.manga-list').append(manga_clone);
+                }else{
+                    document.getElementById("no-manga").style.display = "block";
                 }
-            }else{
-                document.getElementById("no-manga").style.display = "block";
-            }
-        });
+            });
+        }
     }/**/
     
     function PressFilterButton(){
@@ -310,9 +335,11 @@ $this->title = 'PocketManga';
     function GetFilters(){
         // Obtain order and status
         var SelectOption = document.getElementById("filter_order");
+        var SelectType = document.getElementById("filter_type");
         var SelectStatus = document.getElementById("filter_status");
         var Option = SelectOption.options[SelectOption.selectedIndex].value.split('==');
-        var Status = SelectStatus.options[SelectStatus.selectedIndex].value;
+        var Type = Api['SearchType']+'='+SelectType.options[SelectType.selectedIndex].value;
+        var Status = Api['SearchStatus']+'='+SelectStatus.options[SelectStatus.selectedIndex].value;
         var OrderBy = Api['SearchOrderBy']+'='+Option[0];
         var SortBy = (Option[1]?Api['SearchSortBy']+'='+Option[1]:null);
 
@@ -371,8 +398,8 @@ $this->title = 'PocketManga';
 
 
         // Generate end link
-        var Filters = '?'+(Genres?Genres+'&':'')+OrderBy+(SortBy?'&'+SortBy:'');
-
+        var Filters = '?'+(Genres?Genres+'&':'')+Type+'&'+Status+'&'+OrderBy+(SortBy?'&'+SortBy:'');
+        
         return Filters;
     }/**/
 
@@ -393,28 +420,5 @@ $this->title = 'PocketManga';
             }
         }
         return ResponsePath;
-    }
-
-    function AddLinksToPageNummber(){
-        // Get Buttons
-        var ButtonPrevious = document.getElementById('page-button-previous');
-        var ButtonOne = document.getElementById('page-button-one');
-        var ButtonTwo = document.getElementById('page-button-two');
-        var ButtonThree = document.getElementById('page-button-three');
-        var ButtonNext = document.getElementById('page-button-next');
-
-        // Get Class
-        var PreviousClass = ButtonPrevious.getAttribute('class');
-        var OneClass = ButtonOne.getAttribute('class');
-        var TwoClass = ButtonTwo.getAttribute('class');
-        var ThreeClass = ButtonThree.getAttribute('class');
-        var NextClass = ButtonNext.getAttribute('class');
-
-        if(PageNumber==1){
-            ButtonPrevious.setAttribute('class',PreviousClass+' disable');
-            if(NumOfPages>3){
-
-            }
-        }
     }
 </script>

@@ -50,6 +50,7 @@ class MangaController extends Controller
         $Api = null;
         $SortOptions = null;
         $StatusOptions = null;
+        $TypeOptions = null;
         $PageNumber = 1;
         $NumOfPages = 10;
 
@@ -70,6 +71,7 @@ class MangaController extends Controller
         if($Api){
             $SortOptions = $this->getSortOptions($Api);
             $StatusOptions = $this->getStatusOptions($Api);
+            $TypeOptions = $this->getTypeOptions($Api);
 
             $JavaApi = '{';
             $num = 0;
@@ -88,13 +90,10 @@ class MangaController extends Controller
             'JavaApi' => $JavaApi,
             'SortOptions' => $SortOptions,
             'StatusOptions' => $StatusOptions,
+            'TypeOptions' => $TypeOptions,
             'PageNumber' => $PageNumber,
             'NumOfPages' => $NumOfPages,
         ]);
-    }
-
-    private function initializateApiManga(){
-        
     }
 
     private function getSortOptions(Api $Api){
@@ -140,5 +139,20 @@ class MangaController extends Controller
             }
         }
         return $StatusOptions;
+    }
+
+    private function getTypeOptions(Api $Api){
+        $Type=null;
+        $TypeOptions = null;
+        if($Api->AMTypeOptions){
+            $Type = explode('[',str_replace(']','',$Api->AMTypeOptions));
+            array_shift($Type);
+        }
+        if($Type){
+            foreach($Type as $type){
+                $TypeOptions[]=explode('=>', $type);
+            }
+        }
+        return $TypeOptions;
     }
 }

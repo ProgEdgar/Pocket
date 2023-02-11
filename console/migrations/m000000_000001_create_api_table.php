@@ -30,6 +30,8 @@ class m000000_000001_create_api_table extends Migration
             'SearchTotal' => $this->string(100),
             'SearchLimit' => $this->string(50),
             'SearchName' => $this->string(50),
+            'SearchType' => $this->string(50),
+            'SearchStatus' => $this->string(50),
             'SearchWGenres' => $this->string(50),
             'SearchWOutGenres' => $this->string(50),
             'SearchOrderBy' => $this->string(50),
