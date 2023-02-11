@@ -52,7 +52,7 @@ $this->title = 'PocketManga';
                                                 <div class="col-3">
                                                     <select class="sel-color-1 rad-all-15 w-100 p-2" id="filter_status"
                                                         onchange="ChangeButtonSearch()">
-                                                        <option value="all" selected="selected">Show All Status</option>
+                                                        <option value="" selected="selected">Show All Status</option>
                                                         <?php foreach($StatusOptions as $Status){?>
                                                             <option value="<?=$Status[0]?>"><?=$Status[2]?></option>
                                                         <?php } ?>
@@ -62,7 +62,7 @@ $this->title = 'PocketManga';
                                                 <div class="col-3">
                                                     <select class="sel-color-1 rad-all-15 w-100 p-2" id="filter_type"
                                                         onchange="ChangeButtonSearch()">
-                                                        <option value="all" selected="selected">Show All Types</option>
+                                                        <option value="" selected="selected">Show All Types</option>
                                                         <?php foreach($TypeOptions as $Type){?>
                                                             <option value="<?=$Type[0]?>"><?=$Type[1]?></option>
                                                         <?php } ?>
@@ -338,10 +338,20 @@ $this->title = 'PocketManga';
         var SelectType = document.getElementById("filter_type");
         var SelectStatus = document.getElementById("filter_status");
         var Option = SelectOption.options[SelectOption.selectedIndex].value.split('==');
-        var Type = Api['SearchType']+'='+SelectType.options[SelectType.selectedIndex].value;
-        var Status = Api['SearchStatus']+'='+SelectStatus.options[SelectStatus.selectedIndex].value;
+        var TypeValue = SelectType.options[SelectType.selectedIndex].value;
+        var StatusValue = SelectStatus.options[SelectStatus.selectedIndex].value;
         var OrderBy = Api['SearchOrderBy']+'='+Option[0];
         var SortBy = (Option[1]?Api['SearchSortBy']+'='+Option[1]:null);
+        var Type = null;
+        var Status = null;
+
+        // Check Type and Status Value
+        if(TypeValue){
+            Type = Api['SearchType']+'='+TypeValue;
+        }
+        if(StatusValue){
+            Status = Api['SearchStatus']+'='+StatusValue;
+        }
 
         // Obtain all genres that want and don't want
         var AddGenresDivision = Api['SearchWGenres'].split('=>');
@@ -396,9 +406,8 @@ $this->title = 'PocketManga';
             }            
         }
 
-
         // Generate end link
-        var Filters = '?'+(Genres?Genres+'&':'')+Type+'&'+Status+'&'+OrderBy+(SortBy?'&'+SortBy:'');
+        var Filters = '?'+(Genres?Genres+'&':'')+(Type?Type+'&':'')+(Status?Status+'&':'')+OrderBy+(SortBy?'&'+SortBy:'');
         
         return Filters;
     }/**/
