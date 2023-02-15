@@ -41,11 +41,66 @@ class MangaController extends Controller
     }
 
     /**
-     * Displays homepage.
+     * Displays api manga.
      *
      * @return mixed
      */
-    public function actionApimanga()
+    public function actionApimanga($IdApi, $IdManga)
+    {
+        $Api = Api::find()->where(['IdApi'=>$IdApi])->one();
+        $Link = str_replace('{am_id}', $IdManga ,$Api->AMLink);
+        $Manga = $Api->animanga;
+        $Favorite = false;
+        $Library = false;
+        $JavaApi = false;
+
+        if(!Yii::$app->user->isGuest && $Manga){
+            $Favorites = Yii::$app->user->identity->favorites;
+            $Libraries = Yii::$app->user->identity->libraries;
+            if($Favorites){
+                foreach($Favorites as $Fav){
+                    if($Fav->Manga_Id == $Manga->IdManga){
+                        $Favorite = true;
+                    }
+                }
+            }
+            if($Libraries){
+                foreach($Libraries as $Lib){
+                    if($Lib->Manga_Id == $Manga->IdManga){
+                        $Library = true;
+                    }
+                }
+            }
+        }
+
+        if($Api){
+            $JavaApi = '{';
+            $num = 0;
+            foreach($Api as $key=>$value){
+                if($num!=0){
+                    $JavaApi .= ',';
+                }
+                $JavaApi .= '"'.$key.'":'.(isset($value)?'"'.$value.'"':'null');
+                $num++;
+            }
+            $JavaApi .= '}';
+        }
+        return $this->render('api_manga_view', [
+            'Api' => $Api,
+            'JavaApi' => $JavaApi,
+            'Link' => $Link,
+            'IdManga' => $IdManga,
+            'Favorite' => $Favorite,
+            'Library' => $Library,
+        ]);
+    }
+
+    /**
+     * Displays api mangas list.
+     *
+     * @return mixed
+     */
+    public function actionApimangalist()
     {
         $Api = null;
         $SortOptions = null;

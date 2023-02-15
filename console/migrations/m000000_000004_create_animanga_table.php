@@ -30,7 +30,7 @@ class m000000_000004_create_animanga_table extends Migration
             'ReleaseDate' => $this->date()->notNull(),
             'Description' => $this->text()->notNull(),
             'ApiAniMangaId' => $this->integer(),
-            'Api_Id' => $this->integer(),
+            'Api_Id' => $this->integer()->unique(),
             'Manager_Id' => $this->integer(),
         ], $tableOptions);
 

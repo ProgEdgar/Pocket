@@ -11,20 +11,21 @@ use Yii;
  * @property string $Title
  * @property string|null $AlternativeTitle
  * @property string|null $OriginalTitle
- * @property int $Status
- * @property int $OneShotMovie
- * @property int $R18
+ * @property string $Status
+ * @property string $Type
  * @property string $Server
  * @property string|null $SrcImage
- * @property int $Type
+ * @property float|null $Rating
  * @property string $ReleaseDate
- * @property string $Updated
  * @property string $Description
- * @property int $Manager_Id
+ * @property int|null $ApiAniMangaId
+ * @property int|null $Api_Id
+ * @property int|null $Manager_Id
  *
  * @property AnimangaAuthor[] $animangaAuthors
  * @property AnimangaCategory[] $animangaCategories
  * @property AnimangaReadsaw[] $animangaReadsaws
+ * @property Api $api
  * @property AppLibrary[] $appLibraries
  * @property App[] $apps
  * @property Author[] $authors
@@ -34,12 +35,10 @@ use Yii;
  * @property Favorite[] $favorites
  * @property Library[] $libraries
  * @property Manager $manager
- * @property Rating[] $ratings
  * @property Report[] $reports
  * @property User[] $users
  * @property User[] $users0
  * @property User[] $users1
- * @property User[] $users2
  */
 class Animanga extends \yii\db\ActiveRecord
 {
@@ -57,13 +56,17 @@ class Animanga extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Title', 'ReleaseDate', 'Description', 'Manager_Id'], 'required'],
-            [['Status', 'OneShotMovie', 'R18', 'Type', 'Manager_Id'], 'integer'],
-            [['ReleaseDate', 'Updated'], 'safe'],
+            [['Title', 'Status', 'Type', 'ReleaseDate', 'Description'], 'required'],
+            [['Rating'], 'number'],
+            [['ReleaseDate'], 'safe'],
             [['Description'], 'string'],
+            [['ApiAniMangaId', 'Api_Id', 'Manager_Id'], 'integer'],
             [['Title', 'AlternativeTitle', 'OriginalTitle'], 'string', 'max' => 100],
+            [['Status', 'Type'], 'string', 'max' => 20],
             [['Server'], 'string', 'max' => 10],
             [['SrcImage'], 'string', 'max' => 50],
+            [['Api_Id'], 'unique'],
+            [['Api_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Api::class, 'targetAttribute' => ['Api_Id' => 'IdApi']],
             [['Manager_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Manager::class, 'targetAttribute' => ['Manager_Id' => 'IdManager']],
         ];
     }
@@ -79,14 +82,14 @@ class Animanga extends \yii\db\ActiveRecord
             'AlternativeTitle' => 'Alternative Title',
             'OriginalTitle' => 'Original Title',
             'Status' => 'Status',
-            'OneShotMovie' => 'One Shot Movie',
-            'R18' => 'R18',
+            'Type' => 'Type',
             'Server' => 'Server',
             'SrcImage' => 'Src Image',
-            'Type' => 'Type',
+            'Rating' => 'Rating',
             'ReleaseDate' => 'Release Date',
-            'Updated' => 'Updated',
             'Description' => 'Description',
+            'ApiAniMangaId' => 'Api Ani Manga ID',
+            'Api_Id' => 'Api ID',
             'Manager_Id' => 'Manager ID',
         ];
     }
@@ -119,6 +122,16 @@ class Animanga extends \yii\db\ActiveRecord
     public function getAnimangaReadsaws()
     {
         return $this->hasMany(AnimangaReadsaw::class, ['AniManga_Id' => 'IdAniManga']);
+    }
+
+    /**
+     * Gets query for [[Api]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApi()
+    {
+        return $this->hasOne(Api::class, ['IdApi' => 'Api_Id']);
     }
 
     /**
@@ -212,16 +225,6 @@ class Animanga extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Ratings]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRatings()
-    {
-        return $this->hasMany(Rating::class, ['AniManga_Id' => 'IdAniManga']);
-    }
-
-    /**
      * Gets query for [[Reports]].
      *
      * @return \yii\db\ActiveQuery
@@ -259,15 +262,5 @@ class Animanga extends \yii\db\ActiveRecord
     public function getUsers1()
     {
         return $this->hasMany(User::class, ['IdUser' => 'User_Id'])->viaTable('library', ['AniManga_Id' => 'IdAniManga']);
-    }
-
-    /**
-     * Gets query for [[Users2]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers2()
-    {
-        return $this->hasMany(User::class, ['IdUser' => 'User_Id'])->viaTable('rating', ['AniManga_Id' => 'IdAniManga']);
     }
 }

@@ -26,7 +26,7 @@ class m000000_000002_create_user_table extends Migration
             'SrcPhoto' => $this->string(50),
 
             'Theme' => $this->boolean()->notNull()->defaultValue(true),
-            'AniMangaShow' => "ENUM('1','2','3') NOT NULL",
+            'AniMangaShow' => "ENUM('1','2','3') DEFAULT '1' NOT NULL",
             'ChapterShow' => $this->boolean()->notNull()->defaultValue(true),
             'Server' => $this->string(10)->notNull()->defaultValue('en_US'),
             'PrimaryList_Id' => $this->integer()->notNull()->defaultValue(1),
@@ -36,7 +36,7 @@ class m000000_000002_create_user_table extends Migration
             'Created' => "DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL",
             'Updated' => "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL",
 
-            'auth_key' => $this->string(32)->notNull(),
+            'auth_key' => $this->string(100)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),

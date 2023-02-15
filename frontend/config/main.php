@@ -51,7 +51,9 @@ return [
                 '/' => 'site/mangaindex',
                 'home' => 'site/mangaindex',
                 'latest-updated' => 'site/mangaindex',
-                'other-mangas' => 'manga/apimanga',
+
+                'other-mangas' => 'manga/apimangalist',
+                'api/<IdApi:\d+>/manga/<IdManga:\d+>' => 'manga/apimanga',
 
                 'about' => 'site/about',
 

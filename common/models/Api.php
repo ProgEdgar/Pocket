@@ -11,13 +11,16 @@ use Yii;
  * @property string $Name
  * @property string $Link
  * @property int $IsAnime
- * @property string|null $GenresAll
+ * @property string|null $Data
+ * @property string|null $GenresLink
  * @property string|null $GenresId
  * @property string|null $GenresName
  * @property string|null $SearchPage
  * @property string|null $SearchTotal
  * @property string|null $SearchLimit
  * @property string|null $SearchName
+ * @property string|null $SearchType
+ * @property string|null $SearchStatus
  * @property string|null $SearchWGenres
  * @property string|null $SearchWOutGenres
  * @property string|null $SearchOrderBy
@@ -51,7 +54,7 @@ use Yii;
  * @property string|null $CETitle
  * @property string|null $CESeason
  *
- * @property Animanga[] $animangas
+ * @property Animanga $animanga
  * @property User[] $users
  */
 class Api extends \yii\db\ActiveRecord
@@ -72,9 +75,9 @@ class Api extends \yii\db\ActiveRecord
         return [
             [['Name', 'Link', 'IsAnime', 'AMLink', 'AMId'], 'required'],
             [['IsAnime'], 'integer'],
-            [['Name', 'GenresId', 'GenresName', 'SearchTotal', 'AMId', 'AMTitle', 'AMAlternativeTitle', 'AMOriginalTitle', 'AMStatus', 'AMType', 'AMGenre', 'AMGenreName', 'AMReleaseDate', 'AMImage', 'AMRating', 'AMDescription', 'AMAuthor', 'AMAuthorName', 'AMCEQuantity', 'CEId', 'CENumber', 'CEReleaseDate', 'CETitle', 'CESeason'], 'string', 'max' => 100],
-            [['Link', 'GenresAll', 'AMSearchLink', 'AMLink', 'CELink'], 'string', 'max' => 200],
-            [['SearchPage', 'SearchLimit', 'SearchName', 'SearchWGenres', 'SearchWOutGenres', 'SearchOrderBy', 'SearchSortBy'], 'string', 'max' => 50],
+            [['Name', 'Data', 'GenresId', 'GenresName', 'SearchTotal', 'AMId', 'AMTitle', 'AMAlternativeTitle', 'AMOriginalTitle', 'AMStatus', 'AMType', 'AMGenre', 'AMGenreName', 'AMReleaseDate', 'AMImage', 'AMRating', 'AMDescription', 'AMAuthor', 'AMAuthorName', 'AMCEQuantity', 'CEId', 'CENumber', 'CEReleaseDate', 'CETitle', 'CESeason'], 'string', 'max' => 100],
+            [['Link', 'GenresLink', 'AMSearchLink', 'AMLink', 'CELink'], 'string', 'max' => 200],
+            [['SearchPage', 'SearchLimit', 'SearchName', 'SearchType', 'SearchStatus', 'SearchWGenres', 'SearchWOutGenres', 'SearchOrderBy', 'SearchSortBy'], 'string', 'max' => 50],
             [['AMStatusOptions', 'AMOrderByOptions', 'AMSortByOptions', 'AMTypeOptions', 'AMRatingOptions'], 'string', 'max' => 500],
         ];
     }
@@ -89,13 +92,16 @@ class Api extends \yii\db\ActiveRecord
             'Name' => 'Name',
             'Link' => 'Link',
             'IsAnime' => 'Is Anime',
-            'GenresAll' => 'Genres All',
+            'Data' => 'Data',
+            'GenresLink' => 'Genres Link',
             'GenresId' => 'Genres ID',
             'GenresName' => 'Genres Name',
             'SearchPage' => 'Search Page',
             'SearchTotal' => 'Search Total',
             'SearchLimit' => 'Search Limit',
             'SearchName' => 'Search Name',
+            'SearchType' => 'Search Type',
+            'SearchStatus' => 'Search Status',
             'SearchWGenres' => 'Search W Genres',
             'SearchWOutGenres' => 'Search W Out Genres',
             'SearchOrderBy' => 'Search Order By',
@@ -132,13 +138,13 @@ class Api extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Animangas]].
+     * Gets query for [[Animanga]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAnimangas()
+    public function getAnimanga()
     {
-        return $this->hasMany(Animanga::class, ['Api_Id' => 'IdApi']);
+        return $this->hasOne(Animanga::class, ['Api_Id' => 'IdApi']);
     }
 
     /**

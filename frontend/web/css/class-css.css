@@ -90,6 +90,10 @@
     margin-top: 100px !important;
 }
 
+.p-b-70p {
+    padding-bottom: 70px !important;
+}
+
 .float-r{
     float: right !important;
 }
@@ -121,11 +125,23 @@
     text-align-last:center !important;
 }
 
-/*.disabled {
+.disabled {
     pointer-events: none;
     cursor: default;
-}/*/
+}
 
 .b-35{
     bottom: 35px !important;
+}
+
+.img-h-300 {
+    height: 300px !important;
+}
+
+.img-w-225 {
+    width: 225px !important;
+}
+
+.box-border{
+    box-sizing: border-box !important;
 }

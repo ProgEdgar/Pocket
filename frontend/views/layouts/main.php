@@ -22,7 +22,7 @@ AppAsset::register($this);
         
         <?php if(Yii::$app->user->isGuest){ ?>
             <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/dark-theme.css" />
-            <?php }else{ if(Yii::$app->user->identity->leitor->Theme){ ?>
+            <?php }else{ if(Yii::$app->user->identity->Theme){ ?>
             <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/dark-theme.css" />
             <?php }else{ ?>
             <link rel="stylesheet" type="text/css" href="<?=Yii::$app->request->baseUrl?>/css/light-theme.css" />
@@ -69,8 +69,8 @@ AppAsset::register($this);
                             <a class="nav-link text-color-2 <?=(Yii::$app->controller->route == 'site/login')?'active':''?>" href="<?=Yii::$app->request->baseUrl.'/login'?>">Login</a>
                         </li>
                         <?php }else{ ?>
-                        <li class="nav-item align-c">
-                            <a class="nav-link text-color-2 <?=(Yii::$app->controller->route == 'leitor/myaccount')?'active':''?>" href="<?=Yii::$app->request->baseUrl.'/my_account'?>">
+                        <li class="nav-item">
+                            <a class="nav-link w-100 text-color-2 <?=(Yii::$app->controller->route == 'leitor/myaccount')?'active':''?>" href="<?=Yii::$app->request->baseUrl.'/my_account'?>">
                                 <div class="row">
                                     <div class="col-6">
                                         <span><?=Yii::$app->user->identity->Username?></span>
@@ -91,7 +91,7 @@ AppAsset::register($this);
                     </ul>
                 </div>
             </nav>
-            <div class="container m-t-100p">
+            <div class="container m-t-100p p-b-70p">
                 <ul class="nav nav-pills nav-justified">
                     <li class="nav-item pb-0 px-0">
                         <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='site/mangaindex'||Yii::$app->controller->route=='manga/mangaindex')?'active bg-color-2 text-color-1':'text-color-2'?>" 
@@ -102,7 +102,7 @@ AppAsset::register($this);
                             href="<?=Yii::$app->request->baseUrl.'/all-manga'?>">All Manga</a>
                     </li>
                     <li class="nav-item pb-0 px-0">
-                        <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='api/allmanga')?'active bg-color-2 text-color-1':'text-color-2'?>" 
+                        <a class="nav-link rad-t-15 rad-b-0 bold <?=(Yii::$app->controller->route=='manga/apimangalist')?'active bg-color-2 text-color-1':'text-color-2'?>" 
                             href="<?=Yii::$app->request->baseUrl.'/other-mangas'?>">Other Manga</a>
                     </li>
                     <?php if (Yii::$app->user->isGuest) { ?>

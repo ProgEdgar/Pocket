@@ -19,7 +19,7 @@ class m000000_000008_add_data extends Migration
             'Link' => 'https://api.jikan.moe/v4/manga',
             'IsAnime' => false,
             'Data' => '[data]',
-            'GenresAll' => 'https://api.jikan.moe/v4/genres/manga',
+            'GenresLink' => 'https://api.jikan.moe/v4/genres/manga',
             'GenresId' => '[mal_id]',
             'GenresName' => '[name]',
             'SearchPage' => 'page',
@@ -68,7 +68,7 @@ class m000000_000008_add_data extends Migration
             'Link' => 'https://api.jikan.moe/v4/anime',
             'IsAnime' => true,
             'Data' => '[data]',
-            'GenresAll' => 'https://api.jikan.moe/v4/genres/anime',
+            'GenresLink' => 'https://api.jikan.moe/v4/genres/anime',
             'GenresId' => '[mal_id]',
             'GenresName' => '[name]',
             'SearchPage' => 'page',
@@ -109,6 +109,18 @@ class m000000_000008_add_data extends Migration
             'CEReleaseDate' => '[aired]',
             'CETitle' => '[title]',
             'CESeason' => null,
+        ]);
+
+        // Add Main User
+        $password = Yii::$app->getSecurity()->generatePasswordHash('admin');
+        $this->insert('{{%user}}', [
+            'Username' => 'Nildgar',
+            'Email' => 'nill546@hotmail.com',
+            'Gender' => 'M',
+            'BirthDate' => date('Y-m-d',strtotime('12/17/1997')),
+            //'Slug' => 'Nildgar',
+            'auth_key' => $password,
+            'password_hash' => Yii::$app->security->generatePasswordHash('admin'),//strtoupper(Yii::$app->security->generateRandomString(5)),
         ]);
 
     }
